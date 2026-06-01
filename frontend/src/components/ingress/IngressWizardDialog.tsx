@@ -111,13 +111,13 @@ function Step1({
           value={q}
           onChange={(e) => setQ(e.target.value)}
           placeholder="Nombre o código del producto..."
-          className="w-full h-10 pl-9 pr-3 border border-gray-200 rounded-(--radius-btn) text-sm focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary))]"
+          className="w-full h-10 pl-9 pr-3 border border-gray-200 rounded-btn text-sm focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary))]"
           autoFocus
         />
       </div>
 
       {/* Results */}
-      <div className="border border-gray-200 rounded-(--radius-card) divide-y divide-gray-50 max-h-64 overflow-y-auto">
+      <div className="border border-gray-200 rounded-card divide-y divide-gray-50 max-h-64 overflow-y-auto">
         {isLoading ? (
           <p className="px-4 py-3 text-sm text-gray-400">Buscando...</p>
         ) : products.length === 0 ? (
@@ -199,7 +199,7 @@ function Step2({
           <label className="block text-xs font-medium text-gray-700 mb-1">Proveedor</label>
           <select
             {...register("proveedorId")}
-            className="w-full h-10 px-3 border border-gray-200 rounded-(--radius-btn) text-sm focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary))]"
+            className="w-full h-10 px-3 border border-gray-200 rounded-btn text-sm focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary))]"
           >
             <option value="">Sin proveedor</option>
             {suppliers.map((s: any) => (
@@ -299,7 +299,7 @@ function Step3({
       </div>
 
       {/* Toggle */}
-      <div className="flex gap-1 p-1 bg-gray-100 rounded-(--radius-btn) w-fit">
+      <div className="flex gap-1 p-1 bg-gray-100 rounded-btn w-fit">
         {(["total", "unitario"] as const).map((mode) => (
           <button
             key={mode}
@@ -340,7 +340,7 @@ function Step3({
 
       {/* Live preview */}
       {(preview.total > 0 || preview.unitario > 0) && (
-        <div className="bg-[hsl(var(--primary)/0.04)] border border-[hsl(var(--primary)/0.12)] rounded-(--radius-btn) p-4 grid grid-cols-2 gap-4">
+        <div className="bg-[hsl(var(--primary)/0.04)] border border-[hsl(var(--primary)/0.12)] rounded-btn p-4 grid grid-cols-2 gap-4">
           <div>
             <p className="text-[11px] uppercase text-gray-400 font-semibold tracking-wide">Costo unitario</p>
             <p className="text-xl font-bold text-[hsl(var(--primary))] mt-1">
@@ -406,7 +406,7 @@ function Step4({
         <p className="text-xs text-gray-400 mt-0.5">Revisa los datos antes de confirmar</p>
       </div>
 
-      <div className="border border-gray-100 rounded-(--radius-card) divide-y divide-gray-50">
+      <div className="border border-gray-100 rounded-card divide-y divide-gray-50">
         {rows.map(({ label, value }) => (
           <div key={label} className="flex items-center justify-between px-4 py-2.5">
             <span className="text-xs text-gray-500">{label}</span>
@@ -442,15 +442,20 @@ export function IngressWizardDialog({ open, onClose }: Props) {
   const handleClose = () => {
     onClose();
     // Reset after close animation
-    setTimeout(() => { setStep(0); setWizard({ produto: null, step2: null, step3: null } as any); }, 300);
+    setTimeout(() => { setStep(0); setWizard({ producto: null, step2: null, step3: null }); }, 300);
   };
 
   const mutation = useMutation({
     mutationFn: (payload: object) => api.post("/stock-ingress", payload),
-    onSuccess: () => {
-      toast.success("Ingreso registrado exitosamente");
+    onSuccess: (res: any) => {
+      if (res?.data?.requiresAuthorization) {
+        toast.info("Ingreso enviado para autorización del administrador");
+      } else {
+        toast.success("Ingreso registrado exitosamente");
+      }
       qc.invalidateQueries({ queryKey: ["products"] });
       qc.invalidateQueries({ queryKey: ["reports"] });
+      qc.invalidateQueries({ queryKey: ["alerts"] });
       handleClose();
     },
     onError: (e) => {

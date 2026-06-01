@@ -30,7 +30,7 @@ export default function Ingreso() {
         </Button>
       </div>
 
-      <div className="bg-white rounded-(--radius-card) shadow-sm border border-gray-100 overflow-hidden">
+      <div className="bg-white rounded-card shadow-sm border border-gray-100 overflow-hidden">
         <div className="px-5 py-4 border-b border-gray-100 flex items-center gap-2">
           <ArrowDownToLine size={15} className="text-[hsl(var(--primary))]" />
           <h2 className="text-sm font-semibold text-gray-700">Últimos ingresos</h2>
@@ -39,7 +39,7 @@ export default function Ingreso() {
           <thead>
             <tr className="border-b border-gray-100">
               {["Fecha", "Producto", "Cantidad (uds)", "Costo unit.", "Referencia"].map((h) => (
-                <th key={h} className="px-5 py-3 text-left text-[11px] uppercase tracking-wide font-semibold text-gray-400">
+                <th key={h} className="px-5 py-3 text-left text-[11px] uppercase tracking-wide font-medium text-gray-400">
                   {h}
                 </th>
               ))}
