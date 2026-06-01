@@ -78,8 +78,19 @@ async def get_current_user(
     payload = decode_token(credentials.credentials)
     if payload.get("type") != "access":
         raise invalid_credentials("Se requiere token de acceso.")
-    # The actual DB lookup happens in the auth router; here we just trust the JWT.
-    return CurrentUser(id=payload["sub"], role=payload["role"], email=payload.get("email", ""))
+
+    try:
+        user_id = uuid.UUID(payload["sub"])
+    except (KeyError, ValueError):
+        raise invalid_credentials("Token inválido o expirado.")
+
+    from app.db.uow import AsyncUnitOfWork
+
+    async with AsyncUnitOfWork() as uow:
+        user = await uow.usuarios.find_by_id(user_id)
+        if not user or not user.activo:
+            raise invalid_credentials("La sesión ya no corresponde a un usuario activo.")
+        return CurrentUser(id=str(user.id), role=user.rol, email=user.email)
 
 
 def require_role(*roles: str):
