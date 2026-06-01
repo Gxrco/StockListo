@@ -22,7 +22,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
           ref={ref}
           id={selectId}
           className={cn(
-            "w-full h-10 px-3 border rounded-(--radius-btn) text-sm bg-white transition-colors appearance-none",
+            "w-full h-10 px-3 border rounded-btn text-sm bg-white transition-colors appearance-none",
             "focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary))] focus:border-transparent",
             error ? "border-[hsl(var(--error))]" : "border-[hsl(var(--border))]",
             className,

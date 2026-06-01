@@ -68,7 +68,7 @@ export function Sidebar() {
                     <Link
                       to={item.href}
                       className={cn(
-                        "flex items-center gap-3 px-3 py-2.5 rounded-(--radius-btn) text-sm transition-all relative",
+                        "flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm transition-all relative",
                         active
                           ? "font-semibold text-[hsl(var(--primary))] bg-white shadow-[0_6px_18px_rgba(15,23,42,0.07)] border border-[hsl(var(--border))]"
                           : "text-gray-600 hover:bg-white/70 hover:text-gray-900",
@@ -93,7 +93,7 @@ export function Sidebar() {
       {/* User + Logout */}
       {user && (
         <div className="border-t border-[hsl(var(--border))] pt-4 px-2">
-          <div className="rounded-(--radius-card) bg-white border border-[hsl(var(--border))] p-3 shadow-[0_8px_24px_rgba(15,23,42,0.05)]">
+          <div className="rounded-card bg-white border border-[hsl(var(--border))] p-3 shadow-[0_8px_24px_rgba(15,23,42,0.05)]">
           <p className="text-xs font-semibold text-gray-800 truncate">{user.nombre}</p>
           <p className="text-[11px] text-gray-400 truncate">{user.email}</p>
           <button

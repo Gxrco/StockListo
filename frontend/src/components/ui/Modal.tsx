@@ -30,7 +30,7 @@ export function Modal({ open, onClose, children, size = "default", className }: 
         >
           <button
             onClick={onClose}
-            className="absolute right-8 top-7 z-10 grid h-10 w-10 place-items-center rounded-(--radius-btn) border border-[hsl(var(--border))] bg-white text-gray-500 shadow-sm hover:text-gray-800 hover:bg-gray-50 transition-colors"
+            className="absolute right-8 top-7 z-10 grid h-10 w-10 place-items-center rounded-btn border border-[hsl(var(--border))] bg-white text-gray-500 shadow-sm hover:text-gray-800 hover:bg-gray-50 transition-colors"
             aria-label="Cerrar"
           >
             <X size={16} />

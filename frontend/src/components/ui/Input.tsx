@@ -21,7 +21,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           id={inputId}
           className={cn(
-            "w-full h-10 px-3 border rounded-(--radius-btn) text-sm bg-white transition-colors",
+            "w-full h-10 px-3 border rounded-btn text-sm bg-white transition-colors",
             "placeholder:text-gray-400",
             "focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary))] focus:border-transparent",
             error
