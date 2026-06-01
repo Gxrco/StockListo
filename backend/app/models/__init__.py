@@ -7,6 +7,7 @@ from app.models.lote import Lote
 from app.models.movimiento_kardex import MovimientoKardex
 from app.models.alerta_sistema import AlertaSistema
 from app.models.refresh_token import RefreshToken
+from app.models.configuracion_sistema import ConfiguracionSistema
 
 __all__ = [
     "Base",
@@ -18,4 +19,5 @@ __all__ = [
     "MovimientoKardex",
     "AlertaSistema",
     "RefreshToken",
+    "ConfiguracionSistema",
 ]

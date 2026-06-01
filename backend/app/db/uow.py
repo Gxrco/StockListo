@@ -15,6 +15,7 @@ from app.repositories.alerta_repo import AlertaRepository
 from app.repositories.categoria_repo import CategoriaRepository
 from app.repositories.proveedor_repo import ProveedorRepository
 from app.repositories.refresh_token_repo import RefreshTokenRepository
+from app.repositories.configuracion_repo import ConfiguracionRepository
 
 
 class AsyncUnitOfWork:
@@ -29,6 +30,7 @@ class AsyncUnitOfWork:
     categorias: CategoriaRepository
     proveedores: ProveedorRepository
     refresh_tokens: RefreshTokenRepository
+    config: ConfiguracionRepository
 
     async def __aenter__(self) -> Self:
         self.session = async_session_factory()
@@ -40,6 +42,7 @@ class AsyncUnitOfWork:
         self.categorias = CategoriaRepository(self.session)
         self.proveedores = ProveedorRepository(self.session)
         self.refresh_tokens = RefreshTokenRepository(self.session)
+        self.config = ConfiguracionRepository(self.session)
         return self
 
     async def commit(self) -> None:
