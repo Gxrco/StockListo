@@ -15,11 +15,16 @@ cp infra/.env.example infra/.env
 # 3. Build frontend (required for the nginx web container)
 cd frontend && npm install && npm run build && cd ..
 
-# 4. Start all services
-docker compose -f infra/docker-compose.yml --env-file infra/.env up -d
+# 4. Start all services, rebuilding backend/worker/beat images from source
+docker compose -f infra/docker-compose.yml --env-file infra/.env up -d --build
 
 # 5. Wait ~15 s for migrations, then open http://localhost
 ```
+
+When frontend files change, run `cd frontend && npm run build` again because the
+development compose serves the host `frontend/dist` directory through Nginx.
+When backend files change, restart with `up -d --build` so Docker copies the
+latest Python code into the image.
 
 ## Quick start (production — builds everything from source)
 
