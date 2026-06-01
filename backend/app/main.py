@@ -68,7 +68,7 @@ def create_app() -> FastAPI:
 
     # ── Routers ───────────────────────────────────────────────────────────────
     from app.api.v1.routers import health, auth, users, categories, suppliers, products
-    from app.api.v1.routers import stock_ingress, dispatch_carts, dispatches, kardex, reports, alerts
+    from app.api.v1.routers import stock_ingress, dispatch_carts, dispatches, kardex, reports, alerts, config
 
     app.include_router(health.router)
     app.include_router(auth.router, prefix="/api/v1/auth", tags=["auth"])
@@ -82,6 +82,7 @@ def create_app() -> FastAPI:
     app.include_router(kardex.router, prefix="/api/v1/kardex", tags=["kardex"])
     app.include_router(reports.router, prefix="/api/v1/reports", tags=["reports"])
     app.include_router(alerts.router, prefix="/api/v1/alerts", tags=["alerts"])
+    app.include_router(config.router, prefix="/api/v1/config", tags=["config"])
 
     # ── OpenTelemetry (optional) ──────────────────────────────────────────────
     if settings.OTEL_EXPORTER_OTLP_ENDPOINT:
