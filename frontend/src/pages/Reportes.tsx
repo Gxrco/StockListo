@@ -81,7 +81,7 @@ export default function Reportes() {
       <h1 className="text-xl font-bold text-gray-800">Reportes</h1>
 
       <Tabs.Root defaultValue="stock" className="space-y-4">
-        <Tabs.List className="flex gap-1 bg-white p-1 rounded-(--radius-btn) border border-gray-200 w-fit">
+        <Tabs.List className="flex gap-1 bg-white p-1 rounded-btn border border-gray-200 w-fit">
           {[
             { value: "stock", label: "Stock" },
             { value: "movements", label: "Movimientos" },
@@ -107,7 +107,7 @@ export default function Reportes() {
                 <select
                   value={stockCategory}
                   onChange={(e) => setStockCategory(e.target.value)}
-                  className="h-9 px-3 border border-gray-200 rounded-(--radius-btn) text-sm bg-white focus:outline-none"
+                  className="h-9 px-3 border border-gray-200 rounded-btn text-sm bg-white focus:outline-none"
                 >
                   <option value="">Todas las categorías</option>
                   {categories.map((c) => (
@@ -117,18 +117,18 @@ export default function Reportes() {
               </div>
               <button
                 onClick={exportStock}
-                className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-800 border border-gray-200 rounded-(--radius-btn) px-3 py-2 transition-colors"
+                className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-800 border border-gray-200 rounded-btn px-3 py-2 transition-colors"
               >
                 <Download size={14} />
                 Exportar CSV
               </button>
             </div>
-            <div className="bg-white rounded-(--radius-card) shadow-sm border border-gray-100 overflow-hidden">
+            <div className="bg-white rounded-card shadow-sm border border-gray-100 overflow-hidden">
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-gray-100 bg-gray-50">
                     {["Código", "Nombre", "Categoría", "Stock", "Costo prom.", "Valor total"].map((h) => (
-                      <th key={h} className="px-5 py-3 text-left text-[11px] uppercase tracking-wide font-semibold text-gray-400">{h}</th>
+                      <th key={h} className="px-5 py-3 text-left text-[11px] uppercase tracking-wide font-medium text-gray-400">{h}</th>
                     ))}
                   </tr>
                 </thead>
@@ -159,32 +159,32 @@ export default function Reportes() {
                 <div>
                   <label className="block text-[11px] text-gray-500 mb-1">Desde</label>
                   <input type="date" value={movFrom} onChange={(e) => setMovFrom(e.target.value)}
-                    className="h-9 px-3 border border-gray-200 rounded-(--radius-btn) text-sm focus:outline-none" />
+                    className="h-9 px-3 border border-gray-200 rounded-btn text-sm focus:outline-none" />
                 </div>
                 <div>
                   <label className="block text-[11px] text-gray-500 mb-1">Hasta</label>
                   <input type="date" value={movTo} onChange={(e) => setMovTo(e.target.value)}
-                    className="h-9 px-3 border border-gray-200 rounded-(--radius-btn) text-sm focus:outline-none" />
+                    className="h-9 px-3 border border-gray-200 rounded-btn text-sm focus:outline-none" />
                 </div>
                 {(movFrom || movTo) && (
                   <button onClick={() => { setMovFrom(""); setMovTo(""); }}
-                    className="h-9 px-3 text-xs text-gray-500 border border-gray-200 rounded-(--radius-btn) hover:bg-gray-50">
+                    className="h-9 px-3 text-xs text-gray-500 border border-gray-200 rounded-btn hover:bg-gray-50">
                     Limpiar
                   </button>
                 )}
               </div>
               <button onClick={exportMovements}
-                className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-800 border border-gray-200 rounded-(--radius-btn) px-3 py-2 transition-colors">
+                className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-800 border border-gray-200 rounded-btn px-3 py-2 transition-colors">
                 <Download size={14} />
                 Exportar CSV
               </button>
             </div>
-            <div className="bg-white rounded-(--radius-card) shadow-sm border border-gray-100 overflow-hidden">
+            <div className="bg-white rounded-card shadow-sm border border-gray-100 overflow-hidden">
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-gray-100 bg-gray-50">
                     {["Fecha", "Tipo", "Producto", "Cantidad", "Costo unit.", "Saldo"].map((h) => (
-                      <th key={h} className="px-5 py-3 text-left text-[11px] uppercase tracking-wide font-semibold text-gray-400">{h}</th>
+                      <th key={h} className="px-5 py-3 text-left text-[11px] uppercase tracking-wide font-medium text-gray-400">{h}</th>
                     ))}
                   </tr>
                 </thead>
@@ -214,17 +214,17 @@ export default function Reportes() {
           <div className="space-y-3">
             <div className="flex justify-end">
               <button onClick={exportExpiry}
-                className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-800 border border-gray-200 rounded-(--radius-btn) px-3 py-2 transition-colors">
+                className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-800 border border-gray-200 rounded-btn px-3 py-2 transition-colors">
                 <Download size={14} />
                 Exportar CSV
               </button>
             </div>
-            <div className="bg-white rounded-(--radius-card) shadow-sm border border-gray-100 overflow-hidden">
+            <div className="bg-white rounded-card shadow-sm border border-gray-100 overflow-hidden">
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-gray-100 bg-gray-50">
                     {["Producto", "Stock disponible", "Vence"].map((h) => (
-                      <th key={h} className="px-5 py-3 text-left text-[11px] uppercase tracking-wide font-semibold text-gray-400">{h}</th>
+                      <th key={h} className="px-5 py-3 text-left text-[11px] uppercase tracking-wide font-medium text-gray-400">{h}</th>
                     ))}
                   </tr>
                 </thead>
@@ -248,17 +248,17 @@ export default function Reportes() {
         <Tabs.Content value="valuation">
           {valData?.data ? (
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="sm:col-span-1 bg-[hsl(var(--primary))] rounded-(--radius-card) p-6 text-white">
+              <div className="sm:col-span-1 bg-[hsl(var(--primary))] rounded-card p-6 text-white">
                 <p className="text-[11px] uppercase font-semibold text-white/60 tracking-wide">Valor total inventario</p>
                 <p className="text-3xl font-bold mt-2">{currency(valData.data.totalValuacion)}</p>
                 <p className="text-sm text-white/60 mt-2">{valData.data.productos} productos activos</p>
               </div>
-              <div className="sm:col-span-2 bg-white rounded-(--radius-card) shadow-sm border border-gray-100 overflow-hidden">
+              <div className="sm:col-span-2 bg-white rounded-card shadow-sm border border-gray-100 overflow-hidden">
                 <table className="w-full">
                   <thead>
                     <tr className="border-b border-gray-100 bg-gray-50">
                       {["Producto", "Stock", "Costo prom.", "Valor"].map((h) => (
-                        <th key={h} className="px-5 py-3 text-left text-[11px] uppercase tracking-wide font-semibold text-gray-400">{h}</th>
+                        <th key={h} className="px-5 py-3 text-left text-[11px] uppercase tracking-wide font-medium text-gray-400">{h}</th>
                       ))}
                     </tr>
                   </thead>

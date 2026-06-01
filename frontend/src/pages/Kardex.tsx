@@ -48,7 +48,7 @@ export default function Kardex() {
       <div className="flex items-center gap-3">
         <button
           onClick={() => navigate(-1)}
-          className="p-1.5 rounded-(--radius-btn) hover:bg-gray-100 text-gray-500 transition-colors"
+          className="p-1.5 rounded-btn hover:bg-gray-100 text-gray-500 transition-colors"
         >
           <ArrowLeft size={18} />
         </button>
@@ -61,13 +61,13 @@ export default function Kardex() {
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-(--radius-card) p-4 shadow-sm border border-gray-100 flex flex-wrap gap-4 items-end">
+      <div className="bg-white rounded-card p-4 shadow-sm border border-gray-100 flex flex-wrap gap-4 items-end">
         <div className="flex-1 min-w-[200px]">
           <label className="block text-[11px] text-gray-500 mb-1">Producto</label>
           <select
             value={productId}
             onChange={(e) => setProductId(e.target.value)}
-            className="w-full h-9 px-3 border border-gray-200 rounded-(--radius-btn) text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary)/0.3)]"
+            className="w-full h-9 px-3 border border-gray-200 rounded-btn text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary)/0.3)]"
             disabled={productsLoading || !!productsErrorMessage}
           >
             <option value="">
@@ -93,7 +93,7 @@ export default function Kardex() {
             type="date"
             value={from}
             onChange={(e) => setFrom(e.target.value)}
-            className="h-9 px-3 border border-gray-200 rounded-(--radius-btn) text-sm focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary)/0.3)]"
+            className="h-9 px-3 border border-gray-200 rounded-btn text-sm focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary)/0.3)]"
           />
         </div>
 
@@ -103,14 +103,14 @@ export default function Kardex() {
             type="date"
             value={to}
             onChange={(e) => setTo(e.target.value)}
-            className="h-9 px-3 border border-gray-200 rounded-(--radius-btn) text-sm focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary)/0.3)]"
+            className="h-9 px-3 border border-gray-200 rounded-btn text-sm focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary)/0.3)]"
           />
         </div>
 
         {(from || to) && (
           <button
             onClick={() => { setFrom(""); setTo(""); }}
-            className="h-9 flex items-center gap-1.5 px-3 text-sm text-gray-500 hover:text-gray-700 border border-gray-200 rounded-(--radius-btn) transition-colors"
+            className="h-9 flex items-center gap-1.5 px-3 text-sm text-gray-500 hover:text-gray-700 border border-gray-200 rounded-btn transition-colors"
           >
             <X size={14} />
             Limpiar
@@ -119,12 +119,12 @@ export default function Kardex() {
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-(--radius-card) shadow-sm border border-gray-100 overflow-hidden">
+      <div className="bg-white rounded-card shadow-sm border border-gray-100 overflow-hidden">
         <table className="w-full">
           <thead>
             <tr className="border-b border-gray-100 bg-gray-50">
               {["Fecha", "Tipo", "Cantidad", "Costo unit.", "Saldo", "Descripción"].map((h) => (
-                <th key={h} className="px-5 py-3 text-left text-[11px] uppercase tracking-wide font-semibold text-gray-400">
+                <th key={h} className="px-5 py-3 text-left text-[11px] uppercase tracking-wide font-medium text-gray-400">
                   {h}
                 </th>
               ))}

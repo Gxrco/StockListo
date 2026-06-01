@@ -49,7 +49,7 @@ function FieldRow({ label, error, children }: { label: string; error?: string; c
   );
 }
 
-const inputCls = "w-full h-9 px-3 border border-gray-200 rounded-(--radius-btn) text-sm focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary)/0.3)]";
+const inputCls = "w-full h-9 px-3 border border-gray-200 rounded-btn text-sm focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary)/0.3)]";
 
 export default function Inventario() {
   const navigate = useNavigate();
@@ -144,14 +144,14 @@ export default function Inventario() {
         <div className="flex gap-2">
           <button
             onClick={() => setShowCreate(true)}
-            className="flex items-center gap-2 bg-[hsl(var(--primary))] hover:bg-[hsl(var(--primary)/0.9)] text-white text-sm font-medium px-4 py-2 rounded-(--radius-btn) transition-colors"
+            className="flex items-center gap-2 bg-[hsl(var(--primary))] hover:bg-[hsl(var(--primary)/0.9)] text-white text-sm font-medium px-4 py-2 rounded-btn transition-colors"
           >
             <Plus size={15} />
             Nuevo producto
           </button>
           <button
             onClick={() => setShowIngress(true)}
-            className="flex items-center gap-2 bg-[hsl(var(--accent))] hover:bg-[hsl(var(--accent)/0.9)] text-[hsl(var(--primary))] text-sm font-medium px-4 py-2 rounded-(--radius-btn) transition-colors"
+            className="flex items-center gap-2 bg-[hsl(var(--accent))] hover:bg-[hsl(var(--accent)/0.9)] text-[hsl(var(--primary))] text-sm font-medium px-4 py-2 rounded-btn transition-colors"
           >
             <ArrowDownToLine size={15} />
             Ingreso
@@ -162,14 +162,14 @@ export default function Inventario() {
       <IngressWizardDialog open={showIngress} onClose={() => setShowIngress(false)} />
 
       {/* Filters */}
-      <div className="bg-white rounded-(--radius-card) p-4 shadow-sm border border-gray-100 flex gap-3">
+      <div className="bg-white rounded-card p-4 shadow-sm border border-gray-100 flex gap-3">
         <div className="relative flex-1">
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
           <input
             value={q}
             onChange={(e) => { setQ(e.target.value); setPage(1); }}
             placeholder="Buscar por nombre o código..."
-            className="w-full h-9 pl-8 pr-3 border border-gray-200 rounded-(--radius-btn) text-sm focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary)/0.3)]"
+            className="w-full h-9 pl-8 pr-3 border border-gray-200 rounded-btn text-sm focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary)/0.3)]"
           />
         </div>
         <div className="flex gap-1">
@@ -177,7 +177,7 @@ export default function Inventario() {
             <button
               key={opt.value}
               onClick={() => { setStatus(opt.value); setPage(1); }}
-              className={`px-3 py-1.5 text-xs font-medium rounded-(--radius-btn) transition-colors ${
+              className={`px-3 py-1.5 text-xs font-medium rounded-btn transition-colors ${
                 status === opt.value
                   ? "bg-[hsl(var(--primary))] text-white"
                   : "bg-gray-100 text-gray-600 hover:bg-gray-200"
@@ -190,12 +190,12 @@ export default function Inventario() {
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-(--radius-card) shadow-sm border border-gray-100 overflow-hidden">
+      <div className="bg-white rounded-card shadow-sm border border-gray-100 overflow-hidden">
         <table className="w-full">
           <thead>
             <tr className="border-b border-gray-100 bg-gray-50">
               {["Código", "Nombre", "Categoría", "Unidad", "Stock", "Costo prom.", "Estado", ""].map((h) => (
-                <th key={h} className="px-4 py-3 text-left text-[11px] uppercase tracking-wide font-semibold text-gray-400">
+                <th key={h} className="px-4 py-3 text-left text-[11px] uppercase tracking-wide font-medium text-gray-400">
                   {h}
                 </th>
               ))}
@@ -306,17 +306,17 @@ export default function Inventario() {
               <FieldRow label="Descripción (opcional)">
                 <textarea {...createForm.register("descripcion")}
                   rows={2} placeholder="Notas adicionales..."
-                  className="w-full px-3 py-2 border border-gray-200 rounded-(--radius-btn) text-sm focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary)/0.3)] resize-none" />
+                  className="w-full px-3 py-2 border border-gray-200 rounded-btn text-sm focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary)/0.3)] resize-none" />
               </FieldRow>
             </div>
           </ModalBody>
           <ModalFooter>
             <button type="button" onClick={() => { setShowCreate(false); createForm.reset(); }}
-              className="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-(--radius-btn) transition-colors">
+              className="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-btn transition-colors">
               Cancelar
             </button>
             <button type="submit" disabled={createMut.isPending}
-              className="px-4 py-2 text-sm font-medium bg-[hsl(var(--primary))] hover:bg-[hsl(var(--primary)/0.9)] text-white rounded-(--radius-btn) transition-colors disabled:opacity-50">
+              className="px-4 py-2 text-sm font-medium bg-[hsl(var(--primary))] hover:bg-[hsl(var(--primary)/0.9)] text-white rounded-btn transition-colors disabled:opacity-50">
               {createMut.isPending ? "Creando..." : "Crear producto"}
             </button>
           </ModalFooter>
@@ -355,17 +355,17 @@ export default function Inventario() {
               <FieldRow label="Descripción">
                 <textarea {...editForm.register("descripcion")}
                   rows={2}
-                  className="w-full px-3 py-2 border border-gray-200 rounded-(--radius-btn) text-sm focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary)/0.3)] resize-none" />
+                  className="w-full px-3 py-2 border border-gray-200 rounded-btn text-sm focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary)/0.3)] resize-none" />
               </FieldRow>
             </div>
           </ModalBody>
           <ModalFooter>
             <button type="button" onClick={() => setEditing(null)}
-              className="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-(--radius-btn) transition-colors">
+              className="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-btn transition-colors">
               Cancelar
             </button>
             <button type="submit" disabled={editMut.isPending}
-              className="px-4 py-2 text-sm font-medium bg-[hsl(var(--primary))] hover:bg-[hsl(var(--primary)/0.9)] text-white rounded-(--radius-btn) transition-colors disabled:opacity-50">
+              className="px-4 py-2 text-sm font-medium bg-[hsl(var(--primary))] hover:bg-[hsl(var(--primary)/0.9)] text-white rounded-btn transition-colors disabled:opacity-50">
               {editMut.isPending ? "Guardando..." : "Guardar cambios"}
             </button>
           </ModalFooter>

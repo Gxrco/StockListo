@@ -100,19 +100,19 @@ export default function Usuarios() {
         <h1 className="text-xl font-bold text-gray-800">Usuarios</h1>
         <button
           onClick={() => setShowCreate(true)}
-          className="flex items-center gap-2 bg-[hsl(var(--primary))] hover:bg-[hsl(var(--primary)/0.9)] text-white text-sm font-medium px-4 py-2 rounded-(--radius-btn) transition-colors"
+          className="flex items-center gap-2 bg-[hsl(var(--primary))] hover:bg-[hsl(var(--primary)/0.9)] text-white text-sm font-medium px-4 py-2 rounded-btn transition-colors"
         >
           <UserPlus size={15} />
           Nuevo usuario
         </button>
       </div>
 
-      <div className="bg-white rounded-(--radius-card) shadow-sm border border-gray-100 overflow-hidden">
+      <div className="bg-white rounded-card shadow-sm border border-gray-100 overflow-hidden">
         <table className="w-full">
           <thead>
             <tr className="border-b border-gray-100 bg-gray-50">
               {["Nombre", "Email", "Rol", "Estado", ""].map((h) => (
-                <th key={h} className="px-5 py-3 text-left text-[11px] uppercase tracking-wide font-semibold text-gray-400">
+                <th key={h} className="px-5 py-3 text-left text-[11px] uppercase tracking-wide font-medium text-gray-400">
                   {h}
                 </th>
               ))}
@@ -169,7 +169,7 @@ export default function Usuarios() {
               <div>
                 <label className="block text-xs font-medium text-gray-700 mb-1">Nombre</label>
                 <input {...createForm.register("nombre")}
-                  className="w-full h-9 px-3 border border-gray-200 rounded-(--radius-btn) text-sm focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary)/0.3)]" />
+                  className="w-full h-9 px-3 border border-gray-200 rounded-btn text-sm focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary)/0.3)]" />
                 {createForm.formState.errors.nombre && (
                   <p className="text-xs text-red-600 mt-1">{createForm.formState.errors.nombre.message}</p>
                 )}
@@ -177,7 +177,7 @@ export default function Usuarios() {
               <div>
                 <label className="block text-xs font-medium text-gray-700 mb-1">Email</label>
                 <input {...createForm.register("email")} type="email"
-                  className="w-full h-9 px-3 border border-gray-200 rounded-(--radius-btn) text-sm focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary)/0.3)]" />
+                  className="w-full h-9 px-3 border border-gray-200 rounded-btn text-sm focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary)/0.3)]" />
                 {createForm.formState.errors.email && (
                   <p className="text-xs text-red-600 mt-1">{createForm.formState.errors.email.message}</p>
                 )}
@@ -185,7 +185,7 @@ export default function Usuarios() {
               <div>
                 <label className="block text-xs font-medium text-gray-700 mb-1">Contraseña</label>
                 <input {...createForm.register("password")} type="password"
-                  className="w-full h-9 px-3 border border-gray-200 rounded-(--radius-btn) text-sm focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary)/0.3)]" />
+                  className="w-full h-9 px-3 border border-gray-200 rounded-btn text-sm focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary)/0.3)]" />
                 {createForm.formState.errors.password && (
                   <p className="text-xs text-red-600 mt-1">{createForm.formState.errors.password.message}</p>
                 )}
@@ -193,7 +193,7 @@ export default function Usuarios() {
               <div>
                 <label className="block text-xs font-medium text-gray-700 mb-1">Rol</label>
                 <select {...createForm.register("rol")}
-                  className="w-full h-9 px-3 border border-gray-200 rounded-(--radius-btn) text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary)/0.3)]">
+                  className="w-full h-9 px-3 border border-gray-200 rounded-btn text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary)/0.3)]">
                   {ROL_OPTIONS.map((r) => <option key={r} value={r}>{r}</option>)}
                 </select>
               </div>
@@ -201,11 +201,11 @@ export default function Usuarios() {
           </ModalBody>
           <ModalFooter>
             <button type="button" onClick={() => { setShowCreate(false); createForm.reset(); }}
-              className="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-(--radius-btn) transition-colors">
+              className="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-btn transition-colors">
               Cancelar
             </button>
             <button type="submit" disabled={createMut.isPending}
-              className="px-4 py-2 text-sm font-medium bg-[hsl(var(--primary))] hover:bg-[hsl(var(--primary)/0.9)] text-white rounded-(--radius-btn) transition-colors disabled:opacity-50">
+              className="px-4 py-2 text-sm font-medium bg-[hsl(var(--primary))] hover:bg-[hsl(var(--primary)/0.9)] text-white rounded-btn transition-colors disabled:opacity-50">
               {createMut.isPending ? "Creando..." : "Crear usuario"}
             </button>
           </ModalFooter>
@@ -221,12 +221,12 @@ export default function Usuarios() {
               <div>
                 <label className="block text-xs font-medium text-gray-700 mb-1">Nombre</label>
                 <input {...editForm.register("nombre")}
-                  className="w-full h-9 px-3 border border-gray-200 rounded-(--radius-btn) text-sm focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary)/0.3)]" />
+                  className="w-full h-9 px-3 border border-gray-200 rounded-btn text-sm focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary)/0.3)]" />
               </div>
               <div>
                 <label className="block text-xs font-medium text-gray-700 mb-1">Rol</label>
                 <select {...editForm.register("rol")}
-                  className="w-full h-9 px-3 border border-gray-200 rounded-(--radius-btn) text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary)/0.3)]">
+                  className="w-full h-9 px-3 border border-gray-200 rounded-btn text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary)/0.3)]">
                   {ROL_OPTIONS.map((r) => <option key={r} value={r}>{r}</option>)}
                 </select>
               </div>
@@ -238,11 +238,11 @@ export default function Usuarios() {
           </ModalBody>
           <ModalFooter>
             <button type="button" onClick={() => setEditing(null)}
-              className="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-(--radius-btn) transition-colors">
+              className="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-btn transition-colors">
               Cancelar
             </button>
             <button type="submit" disabled={editMut.isPending}
-              className="px-4 py-2 text-sm font-medium bg-[hsl(var(--primary))] hover:bg-[hsl(var(--primary)/0.9)] text-white rounded-(--radius-btn) transition-colors disabled:opacity-50">
+              className="px-4 py-2 text-sm font-medium bg-[hsl(var(--primary))] hover:bg-[hsl(var(--primary)/0.9)] text-white rounded-btn transition-colors disabled:opacity-50">
               {editMut.isPending ? "Guardando..." : "Guardar cambios"}
             </button>
           </ModalFooter>
