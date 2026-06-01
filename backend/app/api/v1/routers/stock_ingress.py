@@ -18,6 +18,7 @@ async def register_ingress(body: StockIngressCreate, current_user: OperatorOrAdm
         result = await IngressService(uow).register(
             producto_id=body.producto_id,
             usuario_id=_uuid.UUID(current_user.id),
+            usuario_role=current_user.role,
             proveedor_id=body.proveedor_id,
             cantidad_cajas=body.cantidad_cajas,
             unidades_por_caja=body.unidades_por_caja,
