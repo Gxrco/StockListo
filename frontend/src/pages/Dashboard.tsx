@@ -4,7 +4,7 @@ import {
   BarChart, Bar, XAxis, YAxis, Tooltip,
   ResponsiveContainer, Legend,
 } from "recharts";
-import { Package, TrendingUp, Truck, Bell } from "lucide-react";
+import { Activity, ArrowUpDown, Bell, Filter, MoreHorizontal, Package, TrendingUp, Truck } from "lucide-react";
 import { TopHeroCard } from "@/components/layout/TopHeroCard";
 import { tipoMovimientoChip } from "@/components/ui/StatusChip";
 import { api } from "@/lib/api";
@@ -25,24 +25,24 @@ function KpiCard({
   label,
   value,
   sub,
-  accent,
+  tone,
 }: {
   icon: React.ElementType;
   label: string;
   value: string;
   sub?: string;
-  accent?: string;
+  tone?: string;
 }) {
   return (
-    <div className="app-card p-5 flex items-start justify-between gap-4">
-      <div>
-        <p className="text-[11px] uppercase font-semibold text-gray-400 tracking-wide">{label}</p>
-        <p className="text-2xl font-semibold tracking-[-0.02em] text-gray-900 mt-2">{value}</p>
-        {sub && <p className="text-xs text-gray-400 mt-1">{sub}</p>}
+    <div className="app-card min-h-28 p-5">
+      <div className="flex items-center justify-between gap-4">
+        <div className="flex items-center gap-2">
+          <Icon size={16} className={tone ?? "text-[hsl(var(--accent))]"} />
+          <p className="text-base font-medium text-gray-900">{label}</p>
+        </div>
+        {sub && <p className="text-sm text-gray-500">{sub}</p>}
       </div>
-      <div className={`p-2.5 rounded-(--radius-btn) ${accent ?? "bg-[hsl(var(--primary)/0.08)]"}`}>
-        <Icon size={18} className={accent ? "text-white" : "text-[hsl(var(--primary))]"} />
-      </div>
+      <p className="mt-4 text-2xl font-medium text-gray-900">{value}</p>
     </div>
   );
 }
@@ -52,16 +52,21 @@ function Panel({
   children,
   actions,
   className,
+  icon: Icon,
 }: {
   title: string;
   children: React.ReactNode;
   actions?: React.ReactNode;
   className?: string;
+  icon?: React.ElementType;
 }) {
   return (
     <section className={`app-card overflow-hidden ${className ?? ""}`}>
       <div className="flex items-center justify-between gap-3 border-b border-[hsl(var(--border))] px-5 py-4">
-        <h2 className="text-sm font-semibold text-gray-800">{title}</h2>
+        <div className="flex items-center gap-2">
+          {Icon && <Icon size={16} className="text-[hsl(var(--accent))]" />}
+          <h2 className="text-base font-medium text-gray-900">{title}</h2>
+        </div>
         {actions}
       </div>
       {children}
@@ -87,7 +92,7 @@ export default function Dashboard() {
   const { data: alertsData } = useQuery({
     queryKey: ["alerts", "critical"],
     queryFn: () => api.get<{ data: any[]; meta: { unreadCount: number } }>(
-      "/alerts?type=STOCK_MINIMO&status=unread&limit=5",
+      "/alerts?tipo=STOCK_MINIMO&status=unread&limit=5",
     ),
     refetchInterval: 30_000,
   });
@@ -114,8 +119,7 @@ export default function Dashboard() {
   return (
     <div className="space-y-6">
       <TopHeroCard
-        title="Panel de Control"
-        subtitle="Inventario en tiempo real"
+        title="Dashboard"
         stats={kpis ? [
           { label: "Valor inventario", value: currency(parseFloat(kpis.totalValorInventario)) },
           { label: "Productos", value: String(kpis.totalProductos) },
@@ -129,22 +133,26 @@ export default function Dashboard() {
           icon={Package}
           label="Total productos"
           value={isLoading ? "—" : String(kpis?.totalProductos ?? 0)}
+          sub="Actual"
         />
         <KpiCard
           icon={TrendingUp}
           label="Valor inventario"
           value={isLoading ? "—" : currency(parseFloat(kpis?.totalValorInventario ?? "0"))}
+          sub="Actual"
         />
         <KpiCard
           icon={Truck}
           label="Despachos del mes"
           value={isLoading ? "—" : String(kpis?.despachosMes ?? 0)}
+          sub="Este mes"
         />
         <KpiCard
           icon={Bell}
           label="Alertas no leídas"
           value={isLoading ? "—" : String(kpis?.alertasNoLeidas ?? 0)}
-          accent={kpis && kpis.alertasNoLeidas > 0 ? "bg-[hsl(var(--error))]" : undefined}
+          sub="Actual"
+          tone={kpis && kpis.alertasNoLeidas > 0 ? "text-[hsl(var(--error))]" : undefined}
         />
       </div>
 
@@ -152,11 +160,12 @@ export default function Dashboard() {
         {/* Chart */}
         <Panel
           title="Actividad — Últimos 30 días"
+          icon={Activity}
           className="xl:col-span-2"
           actions={
-            <div className="flex rounded-(--radius-btn) bg-gray-100 p-1 text-xs">
+            <div className="flex rounded-btn bg-gray-100 p-1 text-xs">
               <span className="rounded-[calc(var(--radius-btn)-3px)] bg-white px-3 py-1 font-medium text-gray-800 shadow-sm">Mensual</span>
-              <span className="px-3 py-1 text-gray-500">Diario</span>
+              <span className="px-3 py-1 text-gray-900">Diario</span>
             </div>
           }
         >
@@ -199,11 +208,11 @@ export default function Dashboard() {
         </Panel>
 
         {/* Critical alerts panel */}
-        <Panel title="Stock crítico" className="flex flex-col">
+        <Panel title="Stock crítico" icon={Bell} className="flex flex-col">
           <div className="flex min-h-55 flex-1 flex-col p-5">
           {criticalAlerts.length === 0 ? (
             <div className="flex-1 flex items-center justify-center">
-              <p className="text-xs text-gray-400 text-center">Sin alertas críticas activas</p>
+              <p className="text-sm text-gray-400 text-center">Sin alertas críticas activas</p>
             </div>
           ) : (
             <ul className="space-y-3 flex-1 overflow-y-auto">
@@ -211,10 +220,10 @@ export default function Dashboard() {
                 <li key={a.id} className="flex items-start gap-2">
                   <span className="mt-0.5 w-1.5 h-1.5 rounded-full bg-red-500 shrink-0" />
                   <div className="min-w-0">
-                    <p className="text-xs font-medium text-gray-800 truncate">
+                    <p className="text-sm font-medium text-gray-800 truncate">
                       {a.productoNombre ?? "Producto"}
                     </p>
-                    <p className="text-[11px] text-gray-500 line-clamp-2">{a.detalle}</p>
+                    <p className="text-sm text-gray-500 line-clamp-2">{a.detalle}</p>
                   </div>
                 </li>
               ))}
@@ -225,14 +234,36 @@ export default function Dashboard() {
       </div>
 
       {/* Recent activity table */}
-      <Panel title="Últimas transacciones">
-        <table className="w-full">
+      <Panel
+        title="Últimas transacciones"
+        icon={Activity}
+        actions={
+          <div className="flex items-center gap-2">
+            <button className="inline-flex h-8 items-center gap-1.5 rounded-btn border border-[hsl(var(--border))] bg-white px-3 text-sm font-medium text-gray-900 shadow-[0_1px_2px_rgba(15,23,42,0.04)]">
+              <Filter size={14} />
+              Filtrar
+            </button>
+            <button className="inline-flex h-8 items-center gap-1.5 rounded-btn border border-[hsl(var(--border))] bg-white px-3 text-sm font-medium text-gray-900 shadow-[0_1px_2px_rgba(15,23,42,0.04)]">
+              <ArrowUpDown size={14} />
+              Ordenar
+            </button>
+            <button
+              aria-label="Más opciones"
+              className="grid h-8 w-8 place-items-center rounded-btn border border-[hsl(var(--border))] bg-white text-gray-900 shadow-[0_1px_2px_rgba(15,23,42,0.04)]"
+            >
+              <MoreHorizontal size={16} />
+            </button>
+          </div>
+        }
+      >
+        <div className="overflow-x-auto">
+        <table className="w-full min-w-[680px]">
           <thead>
-            <tr className="border-b border-[hsl(var(--border))] bg-[hsl(var(--panel))]">
+            <tr className="border-b border-[hsl(var(--border))] bg-white">
               {["Fecha", "Tipo", "Producto", "Cantidad", "Saldo"].map((h) => (
                 <th
                   key={h}
-                  className="px-5 py-3 text-left text-[11px] uppercase tracking-wide font-semibold text-gray-400"
+                  className="px-5 py-3 text-left text-[11px] uppercase tracking-wide font-medium text-gray-500"
                 >
                   {h}
                 </th>
@@ -245,13 +276,13 @@ export default function Dashboard() {
                 key={m.id}
               className="border-b border-gray-50 hover:bg-gray-50/70 transition-colors"
               >
-                <td className="px-5 py-3 text-xs text-gray-500">{formatDateTime(m.fecha)}</td>
+                <td className="px-5 py-3 text-sm text-gray-500">{formatDateTime(m.fecha)}</td>
                 <td className="px-5 py-3">{tipoMovimientoChip(m.tipo)}</td>
-                <td className="px-5 py-3 text-xs text-gray-700 max-w-45 truncate">
+                <td className="px-5 py-3 text-sm text-gray-700 max-w-45 truncate">
                   {m.productoNombre ?? "Producto sin nombre"}
                 </td>
                 <td className="px-5 py-3 text-sm font-medium text-gray-800">{m.cantidad}</td>
-                <td className="px-5 py-3 text-xs text-gray-500">{m.saldo ?? "—"}</td>
+                <td className="px-5 py-3 text-sm text-gray-500">{m.saldo ?? "—"}</td>
               </tr>
             ))}
             {movements.length === 0 && (
@@ -263,6 +294,7 @@ export default function Dashboard() {
             )}
           </tbody>
         </table>
+        </div>
       </Panel>
     </div>
   );
