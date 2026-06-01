@@ -1,0 +1,152 @@
+@import "tailwindcss";
+
+/* Tailwind v4 theme tokens — consumed by utility classes */
+@theme {
+  --radius-btn: 0.7rem;
+  --radius-card: 0.9rem;
+  --color-primary: hsl(187 96% 20%);
+  --color-accent: hsl(156 100% 42%);
+  --color-error: hsl(0 84% 60%);
+  --color-warning: hsl(38 92% 50%);
+  --color-info: hsl(217 91% 60%);
+  --color-background: hsl(210 18% 91%);
+  --color-surface: hsl(0 0% 100%);
+  --color-border: hsl(210 20% 88%);
+  --font-family-sans: Helvetica, Inter, Roboto, system-ui, sans-serif;
+  --tracking-wide: 0.01em;
+}
+
+@layer base {
+  :root {
+    /* HSL channel values used in hsl(var(--x)) patterns */
+    --background: 210 18% 91%;
+    --surface: 0 0% 100%;
+    --primary: 187 96% 20%;
+    --primary-foreground: 0 0% 100%;
+    --accent: 156 100% 42%;
+    --accent-foreground: 0 0% 100%;
+    --error: 0 84% 60%;
+    --warning: 38 92% 50%;
+    --info: 217 91% 60%;
+    --muted: 210 22% 96%;
+    --muted-foreground: 215 14% 48%;
+    --border: 210 20% 88%;
+    --input: 210 20% 88%;
+    --ring: 187 96% 20%;
+    --ink: 226 29% 14%;
+    --panel: 210 25% 97%;
+    /* Radius — also exposed via @theme above */
+    --radius-btn: 0.7rem;
+    --radius-card: 0.9rem;
+  }
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--ink));
+    font-family: Helvetica, Inter, Roboto, system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+}
+
+@layer components {
+  .app-card {
+    @apply bg-white border border-[hsl(var(--border))] rounded-(--radius-card) shadow-[0_10px_30px_rgba(15,23,42,0.035)];
+  }
+
+  .app-control {
+    @apply h-9 rounded-(--radius-btn) border border-[hsl(var(--border))] bg-white text-sm shadow-[0_1px_2px_rgba(15,23,42,0.04)] outline-none transition-colors focus:ring-2 focus:ring-[hsl(var(--primary)/0.16)];
+  }
+
+  .brand-panel-pattern {
+    background-color: hsl(var(--primary));
+    background-image:
+      radial-gradient(circle at 88% -10%, hsl(187 57% 38% / 0.55), transparent 34%),
+      linear-gradient(135deg, transparent 0 64%, hsl(187 48% 35% / 0.24) 64% 66%, transparent 66%),
+      linear-gradient(155deg, hsl(187 96% 20%) 0%, hsl(185 72% 25%) 100%);
+  }
+
+  .screen-modal {
+    animation-duration: 420ms;
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+    animation-fill-mode: both;
+  }
+
+  .screen-modal[data-state="open"] {
+    animation-name: screen-modal-enter;
+  }
+
+  .screen-modal[data-state="closed"] {
+    animation-name: screen-modal-exit;
+    animation-duration: 320ms;
+    animation-timing-function: cubic-bezier(0.7, 0, 0.84, 0);
+  }
+
+  .screen-modal-overlay {
+    animation-duration: 360ms;
+    animation-fill-mode: both;
+  }
+
+  .screen-modal-overlay[data-state="open"] {
+    animation-name: screen-modal-overlay-enter;
+  }
+
+  .screen-modal-overlay[data-state="closed"] {
+    animation-name: screen-modal-overlay-exit;
+    animation-duration: 260ms;
+  }
+}
+
+@keyframes screen-modal-enter {
+  from {
+    opacity: 0.92;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes screen-modal-exit {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0.96;
+    transform: translateY(100%);
+  }
+}
+
+@keyframes screen-modal-overlay-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes screen-modal-overlay-exit {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
