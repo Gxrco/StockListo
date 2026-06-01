@@ -75,7 +75,7 @@ export default function Despacho() {
     queryKey: ["products", "dispatch", debouncedQ, selectedCategory],
     queryFn: () => {
       const params = new URLSearchParams({
-        status: "available",
+        status: "active",
         q: debouncedQ,
         perPage: "50",
       });
@@ -109,7 +109,7 @@ export default function Despacho() {
         </div>
         <button
           onClick={() => setCartOpen(true)}
-          className="relative flex items-center gap-2 bg-[hsl(var(--primary))] text-white text-sm font-medium px-4 py-2 rounded-(--radius-btn) hover:bg-[hsl(var(--primary)/0.9)] transition-colors"
+          className="relative flex items-center gap-2 bg-[hsl(var(--primary))] text-white text-sm font-medium px-4 py-2 rounded-btn hover:bg-[hsl(var(--primary)/0.9)] transition-colors"
         >
           <ShoppingCart size={16} />
           Carrito
@@ -129,13 +129,13 @@ export default function Despacho() {
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="Buscar producto..."
-            className="w-full h-9 pl-8 pr-3 border border-gray-200 rounded-(--radius-btn) text-sm focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary))] bg-white"
+            className="w-full h-9 pl-8 pr-3 border border-gray-200 rounded-btn text-sm focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary))] bg-white"
           />
         </div>
         <select
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
-          className="h-9 px-3 border border-gray-200 rounded-(--radius-btn) text-sm focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary))] bg-white"
+          className="h-9 px-3 border border-gray-200 rounded-btn text-sm focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary))] bg-white"
         >
           <option value="">Todas las categorías</option>
           {categories.map((c: any) => (
@@ -148,25 +148,28 @@ export default function Despacho() {
       {isLoading ? (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className="bg-white rounded-(--radius-card) p-4 h-40 animate-pulse border border-gray-100" />
+            <div key={i} className="bg-white rounded-card p-4 h-40 animate-pulse border border-gray-100" />
           ))}
         </div>
       ) : products.length === 0 ? (
-        <div className="bg-white rounded-(--radius-card) p-12 text-center border border-gray-100">
+        <div className="bg-white rounded-card p-12 text-center border border-gray-100">
           <Package size={32} className="mx-auto text-gray-200 mb-2" />
-          <p className="text-gray-400 text-sm">Sin productos disponibles</p>
+          <p className="text-gray-400 text-sm">Sin productos activos</p>
         </div>
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
           {products.map((p: any) => {
             const inCart = items.some((i) => i.productoId === p.id);
+            const outOfStock = p.stockActual <= 0;
             return (
               <button
                 key={p.id}
-                onClick={() => setSelectedProduct(p)}
-                className={`bg-white rounded-(--radius-card) p-4 shadow-sm border text-left transition-all hover:shadow-md hover:-translate-y-0.5 relative ${
+                onClick={() => !outOfStock && setSelectedProduct(p)}
+                disabled={outOfStock}
+                aria-disabled={outOfStock}
+                className={`bg-white rounded-card p-4 shadow-sm border text-left transition-all relative ${
                   inCart ? "border-[hsl(var(--primary)/0.4)] ring-1 ring-[hsl(var(--primary)/0.2)]" : "border-gray-100"
-                }`}
+                } ${outOfStock ? "opacity-50 cursor-not-allowed" : "hover:shadow-md hover:-translate-y-0.5"}`}
               >
                 {inCart && (
                   <span className="absolute top-2 right-2 w-4 h-4 bg-[hsl(var(--primary))] rounded-full flex items-center justify-center">

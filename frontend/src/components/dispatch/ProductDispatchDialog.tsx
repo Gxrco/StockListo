@@ -108,6 +108,7 @@ export function ProductDispatchDialog({ product, cartId, onClose }: Props) {
   const maxCantidad = unit === "caja"
     ? Math.floor(product.stockActual / unidadesPorCaja)
     : product.stockActual;
+  const isUnavailable = maxCantidad < 1;
 
   return (
     <Modal open={!!product} onClose={onClose}>
@@ -126,16 +127,16 @@ export function ProductDispatchDialog({ product, cartId, onClose }: Props) {
       <ModalBody className="space-y-5">
         {/* Stock summary */}
         <div className="grid grid-cols-3 gap-3">
-          <div className="bg-gray-50 rounded-(--radius-btn) p-3 text-center">
+          <div className="bg-gray-50 rounded-btn p-3 text-center">
             <p className="text-[11px] uppercase text-gray-400 font-semibold">Stock</p>
             <p className="text-xl font-bold text-gray-800 mt-0.5">{product.stockActual}</p>
             <p className="text-xs text-gray-400">unidades</p>
           </div>
-          <div className="bg-gray-50 rounded-(--radius-btn) p-3 text-center">
+          <div className="bg-gray-50 rounded-btn p-3 text-center">
             <p className="text-[11px] uppercase text-gray-400 font-semibold">Lotes activos</p>
             <p className="text-xl font-bold text-gray-800 mt-0.5">{lots.length}</p>
           </div>
-          <div className="bg-gray-50 rounded-(--radius-btn) p-3 text-center">
+          <div className="bg-gray-50 rounded-btn p-3 text-center">
             <p className="text-[11px] uppercase text-gray-400 font-semibold">Costo prom.</p>
             <p className="text-lg font-bold text-[hsl(var(--primary))] mt-0.5">
               {currency(parseFloat(product.costoPromedioPonderado ?? "0"))}
@@ -147,7 +148,7 @@ export function ProductDispatchDialog({ product, cartId, onClose }: Props) {
         {lots.length > 0 && (
           <div>
             <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Lotes disponibles (FIFO)</p>
-            <div className="divide-y divide-gray-50 border border-gray-100 rounded-(--radius-btn)">
+            <div className="divide-y divide-gray-50 border border-gray-100 rounded-btn">
               {lots.slice(0, 4).map((l: any) => (
                 <div key={l.id} className="flex items-center justify-between px-3 py-2">
                   <div>
@@ -168,7 +169,7 @@ export function ProductDispatchDialog({ product, cartId, onClose }: Props) {
         {/* Unit toggle */}
         <div>
           <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Unidad de despacho</p>
-          <div className="flex gap-1 p-1 bg-gray-100 rounded-(--radius-btn) w-fit">
+          <div className="flex gap-1 p-1 bg-gray-100 rounded-btn w-fit">
             {(["unidad", "caja"] as const).map((u) => (
               <button
                 key={u}
@@ -190,7 +191,7 @@ export function ProductDispatchDialog({ product, cartId, onClose }: Props) {
           <div className="flex items-center gap-3">
             <button
               onClick={() => setCantidad((c) => Math.max(1, c - 1))}
-              className="w-9 h-9 rounded-(--radius-btn) border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-gray-50 text-lg font-medium"
+              className="w-9 h-9 rounded-btn border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-gray-50 text-lg font-medium"
             >
               −
             </button>
@@ -200,11 +201,11 @@ export function ProductDispatchDialog({ product, cartId, onClose }: Props) {
               max={maxCantidad}
               value={cantidad}
               onChange={(e) => setCantidad(Math.min(maxCantidad, Math.max(1, parseInt(e.target.value) || 1)))}
-              className="w-20 h-9 text-center border border-gray-200 rounded-(--radius-btn) text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary))]"
+              className="w-20 h-9 text-center border border-gray-200 rounded-btn text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary))]"
             />
             <button
               onClick={() => setCantidad((c) => Math.min(maxCantidad, c + 1))}
-              className="w-9 h-9 rounded-(--radius-btn) border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-gray-50 text-lg font-medium"
+              className="w-9 h-9 rounded-btn border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-gray-50 text-lg font-medium"
             >
               +
             </button>
@@ -215,7 +216,7 @@ export function ProductDispatchDialog({ product, cartId, onClose }: Props) {
         </div>
 
         {/* Cost preview */}
-        <div className="bg-[hsl(var(--primary)/0.04)] border border-[hsl(var(--primary)/0.12)] rounded-(--radius-btn) p-4 flex items-center justify-between">
+        <div className="bg-[hsl(var(--primary)/0.04)] border border-[hsl(var(--primary)/0.12)] rounded-btn p-4 flex items-center justify-between">
           <div>
             <p className="text-xs text-gray-500">
               {cantidad} {unit}{cantidad > 1 ? "s" : ""}
@@ -231,7 +232,7 @@ export function ProductDispatchDialog({ product, cartId, onClose }: Props) {
 
         {/* Lock conflict warning */}
         {lockError && (
-          <div className="flex items-start gap-2 bg-yellow-50 border border-yellow-200 text-yellow-800 text-sm rounded-(--radius-btn) px-3 py-2">
+          <div className="flex items-start gap-2 bg-yellow-50 border border-yellow-200 text-yellow-800 text-sm rounded-btn px-3 py-2">
             <AlertTriangle size={15} className="shrink-0 mt-0.5" />
             <span>{lockError}</span>
           </div>
@@ -244,7 +245,7 @@ export function ProductDispatchDialog({ product, cartId, onClose }: Props) {
           variant="primary"
           onClick={() => addMutation.mutate()}
           loading={addMutation.isPending}
-          disabled={cantidad < 1}
+          disabled={cantidad < 1 || isUnavailable}
         >
           <ShoppingCart size={15} />
           Agregar al carrito

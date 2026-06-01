@@ -71,7 +71,7 @@ function CartLine({
   ) ?? 0;
 
   return (
-    <div className={`p-3 rounded-(--radius-btn) border transition-colors ${expired ? "border-red-200 bg-red-50" : "border-gray-100 bg-gray-50"}`}>
+    <div className={`p-3 rounded-btn border transition-colors ${expired ? "border-red-200 bg-red-50" : "border-gray-100 bg-gray-50"}`}>
       <div className="flex items-start justify-between gap-2">
         <div className="flex-1 min-w-0">
           <p className="text-sm font-medium text-gray-800 truncate">{item.productoNombre}</p>
@@ -147,6 +147,9 @@ export function CartDrawer({ open, onClose }: Props) {
       if (e instanceof ApiError && e.problem.type === "not_found") {
         clearCart();
         toast.info("El carrito expiró. Vuelve a agregar los productos.");
+      } else if (e instanceof ApiError && e.problem.type === "invalid_credentials") {
+        clearCart();
+        toast.error(e.problem.detail);
       } else if (e instanceof ApiError) toast.error(e.problem.detail);
       else toast.error("Error al confirmar el despacho");
     },
@@ -199,7 +202,7 @@ export function CartDrawer({ open, onClose }: Props) {
           {items.length > 0 && (
             <div className="border-t border-gray-100 px-4 py-4 space-y-3">
               {hasExpired && (
-                <div className="flex items-center gap-2 text-xs text-red-600 bg-red-50 border border-red-100 rounded-(--radius-btn) px-3 py-2">
+                <div className="flex items-center gap-2 text-xs text-red-600 bg-red-50 border border-red-100 rounded-btn px-3 py-2">
                   <AlertTriangle size={13} />
                   Algunas reservas expiraron. Agrega los productos de nuevo.
                 </div>
