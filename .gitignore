@@ -23,10 +23,6 @@ frontend/.vite/
 !.env.example
 !infra/.env.example
 
-# Alembic
-backend/alembic/versions/*.py
-!backend/alembic/versions/.gitkeep
-
 # IDE
 .vscode/
 .idea/
